@@ -57,16 +57,48 @@ public class UrlValidatorTest extends TestCase {
        assertFalse(urlVal.isValid(""));
    }
    
-   
-   public void testYourFirstPartition()
+   public void testSchemePartition()
    {
-	   
+        UrlValidator invalid = new UrlValidator(null, null);
+        invalid.isValid("http://www.amazon.com");
+        invalid.isValid("ht://www.amazon.com");
+
+        UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+        urlVal.isValid("amazon.com");
+        urlVal.isValid("http://amazon.com");
+        urlVal.isValid("http:/amazon.com");
+        urlVal.isValid("http:amazon.com");
+        urlVal.isValid("http/amazon.com");
+        urlVal.isValid("://amazon.com");
+        urlVal.isValid("ftp://amazon.com");
+        urlVal.isValid("h3t://amazon.com");
+        urlVal.isValid("3htt://amazon.com");
    }
-   
-   public void testYourSecondPartition(){
-	   
+
+   public void testAuthortiyPartition()
+   {
+
    }
-   
+
+   public void testPortPartition()
+   {
+
+   }
+
+   public void testPathPartition()
+   {
+
+   }
+
+   public void testQueryPartition()
+   {
+
+   }
+
+   public void testUrlPartition()
+   {
+
+   }
    
    public void testIsValid()
    {
