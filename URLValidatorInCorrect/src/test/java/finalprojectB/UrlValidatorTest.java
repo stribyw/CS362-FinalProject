@@ -59,30 +59,41 @@ public class UrlValidatorTest extends TestCase {
    
    public void testSchemePartition()
    {
-        UrlValidator invalid = new UrlValidator(null, null);
-        invalid.isValid("http://www.amazon.com");
-        invalid.isValid("ht://www.amazon.com");
+        UrlValidator invalid = new UrlValidator(null, null,0);
+        assertTrue(invalid.isValid("http://www.amazon.com"));
+        assertFalse(invalid.isValid("ht://www.amazon.com"));
 
         UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-        urlVal.isValid("amazon.com");
-        urlVal.isValid("http://amazon.com");
-        urlVal.isValid("http:/amazon.com");
-        urlVal.isValid("http:amazon.com");
-        urlVal.isValid("http/amazon.com");
-        urlVal.isValid("://amazon.com");
-        urlVal.isValid("ftp://amazon.com");
-        urlVal.isValid("h3t://amazon.com");
-        urlVal.isValid("3htt://amazon.com");
+        assertFalse(urlVal.isValid("amazon.com"));
+        assertTrue(urlVal.isValid("http://amazon.com"));
+        assertFalse(urlVal.isValid("http:/amazon.com"));
+        assertFalse(urlVal.isValid("http:amazon.com"));
+        assertFalse(urlVal.isValid("http/amazon.com"));
+        assertFalse(urlVal.isValid("://amazon.com"));
+        assertTrue(urlVal.isValid("ftp://amazon.com"));
+        assertTrue(urlVal.isValid("h3t://amazon.com"));
+        assertFalse(urlVal.isValid("3ht://amazon.com"));
    }
 
    public void testAuthortiyPartition()
    {
-
+	UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+	assertTrue(urlVal.isValid("file:///etc"));
+	assertTrue(urlVal.isValid("http://www.amazon.com"));
+	assertFalse(urlVal.isValid(""));
+	assertFalse(urlVal.isValid("4.3.5.2."));
+	assertFalse(urlVal.isValid("1.5.7.5.7"));
+	assertFalse(urlVal.isValid("3.5.9"));
+	assertFalse(urlVal.isValid("am.zn"));
+	assertFalse(urlVal.isValid("am.3j"));
+	assertTrue(urlVal.isValid("http://0.0.0.0"));
+	assertTrue(urlVal.isValid("http://amazon.cc"));
+	assertTrue(urlVal.isValid("http://amazon.com"));
    }
 
    public void testPortPartition()
    {
-
+	
    }
 
    public void testPathPartition()
