@@ -16,8 +16,10 @@
  */
 package finalprojectB;
 
+import java.util.Calendar;
 import junit.framework.TestCase;
-
+import java.util.Random;
+import org.junit.Test;
 /**
  * Performs Validation Test for url validations.
  *
@@ -131,12 +133,54 @@ public class UrlValidatorTest extends TestCase {
 	assertTrue(urlVal.isValid("http://amazon.com"));
    }
 
-   
+   private static final long TestTimeout = 60 * 500 * 1;
+
    public void testIsValid()
    {
-	   for(int i = 0;i<10000;i++)
-	   {
-		   
-	   }
+	String[] schemes = {"http://","ftp://","h3t://","://","htp://","","http:/","file://"}; //8
+	String[] auths = {"","www.amazon.com","0.0.0.0","amazon.com:80","am.3n","amazon.cc","amazon.com:jhs"}; //7
+	String[] paths = {"/file","/file/file2","/..","/#","/file//file3","/etc"}; //6
+	String[] queries = {"?action=hide","","?action=hide&mode=up"}; //3
+	long startTime = Calendar.getInstance().getTimeInMillis();
+	long elapsed = Calendar.getInstance().getTimeInMillis() - startTime;
+	System.out.println("Start testing...");
+	for (int iteration = 0; elapsed < TestTimeout; iteration++) 
+	{
+		long randomseed = 10;//System.currentTimeMillis();
+		Random random = new Random(randomseed);
+		for(int i = 0; i < 500; i++)
+		{
+			UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+			int random1 = (int )(Math.random() * 5 + 1);
+			if(random1 == 1) //test a scheme
+			{
+				int random2 = (int )(Math.random() * 8 + 0);
+				String temp = schemes[random2] + auths[1];
+				urlVal.isValid(temp);
+			}
+			else if(random1 == 2) //test an authority+port
+			{
+				int random2 = (int )(Math.random() * 7 + 0);
+				String temp = schemes[0] + auths[random2];
+                                urlVal.isValid(temp);
+			}
+			else if(random1 == 3) //test a path
+                        {
+				int random2 = (int )(Math.random() * 6 + 0);
+				String temp = schemes[0] + auths[1] + paths[random2];
+                                urlVal.isValid(temp);
+                        }
+			else if(random1 == 4) //test a query
+                        {
+				int random2 = (int )(Math.random() * 3 + 0);
+				String temp = schemes[0] + auths[1] + queries[random2];
+                                urlVal.isValid(temp);
+                        }
+		}
+		elapsed = (Calendar.getInstance().getTimeInMillis() - startTime);
+		if ((iteration % 10000) == 0 && iteration != 0)
+			System.out.println("elapsed time: " + elapsed + " of " + TestTimeout);
+	}
+	System.out.println("Done testing...");
    }
 }
