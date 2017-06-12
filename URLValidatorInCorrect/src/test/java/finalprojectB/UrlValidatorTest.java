@@ -64,7 +64,7 @@ public class UrlValidatorTest extends TestCase {
         assertFalse(invalid.isValid("ht://www.amazon.com"));
 
         UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-        assertFalse(urlVal.isValid("amazon.com"));
+        assertFalse(urlVal.isValid("amazon.com")); //should be true
         assertTrue(urlVal.isValid("http://amazon.com"));
         assertFalse(urlVal.isValid("http:/amazon.com"));
         assertFalse(urlVal.isValid("http:amazon.com"));
@@ -89,28 +89,26 @@ public class UrlValidatorTest extends TestCase {
 	assertTrue(urlVal.isValid("http://0.0.0.0"));
 	assertTrue(urlVal.isValid("http://amazon.cc"));
 	assertTrue(urlVal.isValid("http://amazon.com"));
-   }
-
-   public void testPortPartition()
-   {
-	
+	assertTrue(urlVal.isValid("http://amazon.com:80"));
+	assertFalse(urlVal.isValid("http://amazon.com:-1"));
+	assertTrue(urlVal.isValid("http://amazon.com:0"));
+	assertTrue(urlVal.isValid("http://amazon.com:65565"));
    }
 
    public void testPathPartition()
    {
-
+	UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+	
    }
 
    public void testQueryPartition()
    {
-
+	UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+	assertTrue(urlVal.isValid("http://amazon.com?action=hide"));
+	assertTrue(urlVal.isValid("http://amazon.com?action=hide&align=center"));
+	assertTrue(urlVal.isValid("http://amazon.com"));
    }
 
-   public void testUrlPartition()
-   {
-
-   }
-   
    public void testIsValid()
    {
 
