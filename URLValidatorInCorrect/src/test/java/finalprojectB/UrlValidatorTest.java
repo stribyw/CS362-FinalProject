@@ -49,12 +49,28 @@ public class UrlValidatorTest extends TestCase {
 	   assertFalse(urlVal.isValid("http://www.tacotüesday.com"));
 	   assertTrue(urlVal.isValid("http://www.oregonstate.edu"));
 
-
-	   //assertFalse(urlVal.isValid("invalidhttp://www.amazon.com"));     //test fails, cannot run uncommented
-       //assertFalse(urlVal.isValid("p://www.amazon.com"));     //test fails, cannot run uncommented
+       //--testing valid and invalid scheme--//
+	   //assertFalse(urlVal.isValid("invalidhttp://www.amazon.com"));     //test fails, UNEXPECTED, cannot run uncommented
+       //assertFalse(urlVal.isValid("p://www.amazon.com"));     //test fails, UNEXPECTED, cannot run uncommented
        assertTrue(urlVal.isValid("http://www.nba.com"));
+       assertTrue(urlVal.isValid("https://mail.google.com"));
+
+       //--testing valid and invalid domain names--//
+       assertTrue(urlVal.isValid("https://www.navy.mil"));
+       assertTrue(urlVal.isValid("https://www.energy.gov"));
+       assertTrue(urlVal.isValid("http://www.ontariocolleges.ca"));
+       //assertTrue(urlVal.isValid("https://www.gov.uk"));              //test fails, UNEXPECTED, cannot run uncommented
+
 	   assertFalse(urlVal.isValid("http://www.google.invalidcom"));
        assertFalse(urlVal.isValid(""));
+       //assertTrue(urlVal.isValid("http://255.255.255.255//"));      //test fails, UNEXPECTED, cannot run uncommented
+       assertFalse(urlVal.isValid("http://256.256.256.256//"));
+       //assertTrue(urlVal.isValid("http://0.0.0.0//"));          //test fails, UNEXPECTED, cannot run uncommented
+       assertTrue(urlVal.isValid("http://www.google.com/800/"));       //test fails, UNEXPECTED, cannot run uncommented
+       assertFalse(urlVal.isValid("http://localhost:4$3"));
+       //assertTrue(urlVal.isValid("http://localhost:400/"));       //test fails, UNEXPECTED, cannot run uncommented
+       //assertTrue(urlVal.isValid("http://localhost:40/"));        //test fails, UNEXPECTED, cannot run uncommented
+       //assertTrue(urlVal.isValid("http://localhost:8"));
    }
    
    public void testSchemePartition()
@@ -109,6 +125,7 @@ public class UrlValidatorTest extends TestCase {
 	assertTrue(urlVal.isValid("http://amazon.com"));
    }
 
+   
    public void testIsValid()
    {
 
@@ -117,17 +134,4 @@ public class UrlValidatorTest extends TestCase {
 		   
 	   }
    }
-   
-   public void testAnyOtherUnitTest()
-   {
-	   
-   }
-   /**
-    * Create set of tests by taking the testUrlXXX arrays and
-    * running through all possible permutations of their combinations.
-    *
-    * @param testObjects Used to create a url.
-    */
-   
-
 }
