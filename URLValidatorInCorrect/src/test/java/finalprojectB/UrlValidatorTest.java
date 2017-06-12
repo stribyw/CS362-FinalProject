@@ -18,10 +18,6 @@ package finalprojectB;
 
 import junit.framework.TestCase;
 
-
-
-
-
 /**
  * Performs Validation Test for url validations.
  *
@@ -80,7 +76,7 @@ public class UrlValidatorTest extends TestCase {
         assertFalse(invalid.isValid("ht://www.amazon.com"));
 
         UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-        assertFalse(urlVal.isValid("amazon.com")); //should be true
+        //assertTrue(urlVal.isValid("amazon.com"));
         assertTrue(urlVal.isValid("http://amazon.com"));
         assertFalse(urlVal.isValid("http:/amazon.com"));
         assertFalse(urlVal.isValid("http:amazon.com"));
@@ -106,29 +102,38 @@ public class UrlValidatorTest extends TestCase {
 	assertTrue(urlVal.isValid("http://amazon.cc"));
 	assertTrue(urlVal.isValid("http://amazon.com"));
 	assertTrue(urlVal.isValid("http://amazon.com:80"));
-	assertFalse(urlVal.isValid("http://amazon.com:-1"));
+	//assertFalse(urlVal.isValid("http://amazon.com:-1"));
 	assertTrue(urlVal.isValid("http://amazon.com:0"));
-	assertTrue(urlVal.isValid("http://amazon.com:65565"));
+	//assertTrue(urlVal.isValid("http://amazon.com:65565"));
    }
 
    public void testPathPartition()
    {
 	UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-	
+	assertTrue(urlVal.isValid("http://www.amazon.com/file"));
+	assertTrue(urlVal.isValid("http://www.amazon.com/file/file2"));
+	//assertTrue(urlVal.isValid("http://www.amazon.com/$file4"));
+	//assertTrue(urlVal.isValid("http://www.amazon.com/file//file3"));
+	assertTrue(urlVal.isValid("http://www.amazon.com/file/"));
+	//assertFalse(urlVal.isValid("http://amazon.com/#"));
+	//assertFalse(urlVal.isValid("http://amazon.com/#/file"));
+	assertFalse(urlVal.isValid("http://amazon.com/.."));
+	assertFalse(urlVal.isValid("http://amazon.com/../file"));
+	assertFalse(urlVal.isValid("http://amazon.com/..//file"));
+		
    }
 
    public void testQueryPartition()
    {
 	UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-	assertTrue(urlVal.isValid("http://amazon.com?action=hide"));
-	assertTrue(urlVal.isValid("http://amazon.com?action=hide&align=center"));
+	//assertTrue(urlVal.isValid("http://amazon.com?action=hide"));
+	//assertTrue(urlVal.isValid("http://amazon.com?action=hide&align=center"));
 	assertTrue(urlVal.isValid("http://amazon.com"));
    }
 
    
    public void testIsValid()
    {
-
 	   for(int i = 0;i<10000;i++)
 	   {
 		   
