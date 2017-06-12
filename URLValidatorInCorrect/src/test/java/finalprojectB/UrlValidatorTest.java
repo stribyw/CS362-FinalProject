@@ -66,8 +66,11 @@ public class UrlValidatorTest extends TestCase {
        //assertTrue(urlVal.isValid("http://255.255.255.255//"));      //test fails, UNEXPECTED, cannot run uncommented
        assertFalse(urlVal.isValid("http://256.256.256.256//"));
        //assertTrue(urlVal.isValid("http://0.0.0.0//"));          //test fails, UNEXPECTED, cannot run uncommented
-       //assertTrue(urlVal.isValid("http://localhost:8000/"));       //test fails, UNEXPECTED, cannot run uncommented
+       assertTrue(urlVal.isValid("http://www.google.com/800/"));       //test fails, UNEXPECTED, cannot run uncommented
        assertFalse(urlVal.isValid("http://localhost:4$3"));
+       //assertTrue(urlVal.isValid("http://localhost:400/"));       //test fails, UNEXPECTED, cannot run uncommented
+       //assertTrue(urlVal.isValid("http://localhost:40/"));        //test fails, UNEXPECTED, cannot run uncommented
+       //assertTrue(urlVal.isValid("http://localhost:8"));
    }
    
    public void testSchemePartition()
@@ -104,25 +107,6 @@ public class UrlValidatorTest extends TestCase {
 	assertTrue(urlVal.isValid("http://amazon.com"));
    }
 
-   public void testPortPartition()
-   {
-	
-   }
-
-   public void testPathPartition()
-   {
-
-   }
-
-   public void testQueryPartition()
-   {
-
-   }
-
-   public void testUrlPartition()
-   {
-
-   }
    
    public void testIsValid()
    {
